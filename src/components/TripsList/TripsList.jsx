@@ -8,6 +8,7 @@ const TripsList = (props) => {
 
   return (
     <>
+    <h2><Link to="/Trips/New">Create Trip</Link></h2>
       <main>
         {props.trips && props.trips.map((trip) => (
           <Link key={trip._id} to={`/trips/${trip._id}`}>

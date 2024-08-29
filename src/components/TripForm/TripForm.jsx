@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const TripForm = (props) => {
   const [formData, setFormData] = useState({
-    Destination: ''
+    destination: ''
   })
 
   const handleChange = (evt) => {
@@ -11,7 +11,7 @@ const TripForm = (props) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log('formData', formData)
+    props.handleAddTrip(formData)
   }
 
   return ( 
@@ -21,10 +21,11 @@ const TripForm = (props) => {
       required
       type="text"
       id="destination-input"
-      name="Destination"
-      value={formData.Destination}
+      name="destination"
+      value={formData.destination}
       onChange={handleChange}
       />
+      <button type="submit">Submit</button>
     </form>
   );
 }

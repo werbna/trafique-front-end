@@ -17,7 +17,7 @@ const App = () => {
   const [user, setUser] = useState(authService.getUser());
   const [trips, setTrips] = useState([]);
 
-  const navigate = useNavigate
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchAllTrips = async () => {
@@ -46,17 +46,24 @@ const App = () => {
         <Routes>
           {user ? (
             <>
-            <Route path='/' element={<Dashboard user={user} />} />
-            <Route path='/trips' element={<TripsList user={user} trips={trips} />} />
-            <Route path='/trips/:tripId' element={<TripDetails setUser={setUser} trips={trips} />} />
-            <Route path='/trips/new' element={<TripForm handleAddTrip={handleAddTrip} />} />
+            <Route path='/' 
+            element={<Dashboard user={user} />} />
+            <Route path='/trips' 
+            element={<TripsList user={user} trips={trips} />} />
+            <Route path='/trips/new' 
+            element={<TripForm setUser={setUser} handleAddTrip={handleAddTrip} />} />
 
+            <Route path='/trips/:tripId' 
+            element={<TripDetails setUser={setUser} trips={trips} />} />
             </>
           ) : (
-            <Route path='/' element={<Landing />} />
+            <Route path='/' 
+            element={<Landing />} />
           )}
-          <Route path='/signup' element={<SignupForm setUser={setUser} />} />
-          <Route path='/signin' element={<SigninForm setUser={setUser} />} />
+          <Route path='/signup' 
+          element={<SignupForm setUser={setUser} />} />
+          <Route path='/signin' 
+          element={<SigninForm setUser={setUser} />} />
 
         </Routes>
       </AuthedUserContext.Provider>
