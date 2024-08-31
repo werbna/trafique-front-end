@@ -10,7 +10,6 @@ import TripDetails from './components/TripDetails/TripDetails';
 import TripForm from './components/TripForm/TripForm';
 import * as tripService from '../src/services/tripsService';
 import * as authService from '../src/services/authService';
-
 export const AuthedUserContext = createContext(null);
 
 const App = () => {

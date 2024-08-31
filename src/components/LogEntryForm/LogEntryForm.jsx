@@ -1,27 +1,33 @@
 import { useState, useEffect } from 'react';
-import * as tripService from '../../services/tripsService'
 
-const logEntryForm = (props) => {
-  const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    rating: 0
-  });
+const LogEntryForm = (props) => {
+  const [formData, setFormData] = useState({ title: '', content: '', rating: 0 });
+  const [logEntryCreated, setLogEntryCreated] = useState(false);
 
   const handleChange = (evt) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  }
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    props.handleAddLogEntry(formData);
-    setFormData({
-      title: '',
-      content: '',
-      rating: 0
-    });
-  }
+    try {
+      props.handleAddLogEntry(formData);
+      setFormData({
+        title: '',
+        content: '',
+        rating: 0
+      });
+      setLogEntryCreated(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  useEffect(() => {
+    if (logEntryCreated) {
+      window.location.reload();
+    }
+  }, [logEntryCreated]);
 
 
   return (
@@ -54,4 +60,4 @@ const logEntryForm = (props) => {
   );
 }
 
-export default logEntryForm;
+export default LogEntryForm;

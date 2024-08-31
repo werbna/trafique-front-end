@@ -6,8 +6,6 @@ import LogEntryForm from "../LogEntryForm/LogEntryForm";
 const TripDetails = (props) => {
   const { tripId } = useParams();
   const [trip, setTrip] = useState(null);
-  const [loading, setLoading] = useState(true);
-  
 
   useEffect(() => {
     const fetchTrip = async () => {
@@ -15,7 +13,6 @@ const TripDetails = (props) => {
         const tripData = await tripService.show(tripId);
         console.log("tripData:", tripData);
         setTrip(tripData);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching trip:", error);
       }
@@ -24,18 +21,10 @@ const TripDetails = (props) => {
   }, [tripId]);
 
   const handleAddLogEntry = async (logEntryFormData) => {
-    const newLogEntry = await tripService.createLogEntry(
-      tripId,
-      logEntryFormData
-    );
+    const newLogEntry = await tripService.createLogEntry(tripId, logEntryFormData);
     setTrip({ ...trip, logEntries: [...trip.logEntries, newLogEntry] });
   };
 
-  console.log("Trip state:", trip);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
   return (
     <>
       <main>
@@ -52,14 +41,15 @@ const TripDetails = (props) => {
               </button>
             </>
             <ul>
-              {trip && trip.logEntries.map((logEntry) => (
-                <li key={logEntry._id}>
-                  <p>Author: {logEntry.author && logEntry.author.username}</p>
-                  <p>Title: {logEntry.title}</p>
-                  <p>Content: {logEntry.content}</p>
-                  <p>Rating: {logEntry.rating}</p>
-                </li>
-              ))}
+              {trip &&
+                trip.logEntries.map((logEntry) => (
+                  <li key={logEntry._id}>
+                    <p>Author: {logEntry.author.username}</p>
+                    <p>Title: {logEntry.title}</p>
+                    <p>Content: {logEntry.content}</p>
+                    <p>Rating: {logEntry.rating}</p>
+                  </li>
+                ))}
             </ul>
           </div>
         ) : (
@@ -69,4 +59,5 @@ const TripDetails = (props) => {
     </>
   );
 };
+
 export default TripDetails;
