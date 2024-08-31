@@ -16,7 +16,7 @@ const show = async (tripId) => {
     const res = await fetch(`${BASE_URL}/${tripId}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
-    return res.json();
+    return await res.json();
   } catch (err) {
     console.log(err);
   }
@@ -40,7 +40,7 @@ const create = async (tripFormData) => {
 
 const createLogEntry = async (tripId, logEntryFormData) => {
   try {
-    const res = await fetch(`${BASE_URL}/${tripId}/logs`, {
+    const res = await fetch(`${BASE_URL}/${tripId}/logEntries`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -54,4 +54,16 @@ const createLogEntry = async (tripId, logEntryFormData) => {
   }
 };
 
-export { index, show, create, createLogEntry };
+const deleteTrip = async (tripId) => {
+  try {
+    const res = await fetch(`${BASE_URL}/${tripId}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { index, show, create, createLogEntry, deleteTrip };

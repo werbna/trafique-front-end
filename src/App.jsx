@@ -32,7 +32,13 @@ const App = () => {
     const newTrip = await tripService.create(tripFormData);
     setTrips([...trips, newTrip]);
     navigate('/trips')
-  }  
+  }
+  
+  const handleDeleteTrip = async (tripId) => {
+    console.log('tripId', tripId)
+    setTrips(trips.filter((trip) => trip._id !== tripId));
+    navigate('/trips')
+  }
 
   const handleSignout = () => {
     authService.signout();
@@ -51,10 +57,10 @@ const App = () => {
             <Route path='/trips' 
             element={<TripsList user={user} trips={trips} />} />
             <Route path='/trips/new' 
-            element={<TripForm setUser={setUser} handleAddTrip={handleAddTrip} />} />
-
+            element={<TripForm setUser={setUser} handleAddTrip={handleAddTrip}  />} />
             <Route path='/trips/:tripId' 
-            element={<TripDetails setUser={setUser} trips={trips} />} />
+            element={<TripDetails setUser={setUser} trips={trips} handleDeleteTrip={handleDeleteTrip} />} />
+
             </>
           ) : (
             <Route path='/' 

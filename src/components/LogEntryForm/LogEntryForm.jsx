@@ -1,25 +1,28 @@
 import { useState, useEffect } from 'react';
+import * as tripService from '../../services/tripsService'
 
 const logEntryForm = (props) => {
-  const [logEntryData, setLogEntryData] = useState({
+  const [formData, setFormData] = useState({
     title: '',
     content: '',
     rating: 0
   });
 
   const handleChange = (evt) => {
-    setLogEntryData({ ...logEntryData, [evt.target.name]: evt.target.value });
+    setFormData({ ...formData, [evt.target.name]: evt.target.value });
   }
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    props.addLogEntry(logEntryData);
-    setLogEntryData({
+    props.handleAddLogEntry(formData);
+    setFormData({
       title: '',
       content: '',
       rating: 0
     });
   }
+
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -28,14 +31,14 @@ const logEntryForm = (props) => {
         type="text"
         id="title-input"
         name="title"
-        value={logEntryData.title}
+        value={formData.title}
         onChange={handleChange}
       />
       <label htmlFor="content-input">Content:</label>
       <textarea
         id="content-input"
         name="content"
-        value={logEntryData.content}
+        value={formData.content}
         onChange={handleChange}
       />
       <label htmlFor="rating-input">Rating:</label>
@@ -43,7 +46,7 @@ const logEntryForm = (props) => {
         type="number"
         id="rating-input"
         name="rating"
-        value={logEntryData.rating}
+        value={formData.rating}
         onChange={handleChange}
       />
       <button type="submit">Add Log Entry</button>
